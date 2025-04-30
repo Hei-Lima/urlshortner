@@ -16,7 +16,7 @@ services:
     ports:
       - "27017:27017"
     environment:
-    # Lembre-se de trocar as variáveis de ambiente com os valores corretos
+    # Lembre-se de trocar as variáveis de ambiente com os valores corretos no .env
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME:-admin}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD:-secret}
     volumes:

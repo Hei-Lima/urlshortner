@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
+const testRoutes = require('./routes/test');
 
-app.listen(3000, () => {
- console.log("Server running on port 3000");
+app.use('/test', testRoutes);
+
+app.listen(8080, () => {
+    console.log('Servidor rodando na porta 8080');
 });
