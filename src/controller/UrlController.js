@@ -2,6 +2,7 @@ const { parseUrl, generateUniqueId, saveUrl, getLongUrl } = require('../utils/Ur
 
 module.exports = {
     create: (req, res) => {
+        // expirationDate will be provided in minutes to simplify timezone handling
         const longUrl = req.body.url;
 
         if (!longUrl) {
@@ -13,7 +14,7 @@ module.exports = {
         const shortUrl = generateUniqueId();
 
         console.log(`ShortUrl ${shortUrl} created of ${parsedUrl}`);
-        saveUrl(parsedUrl, shortUrl)
+        saveUrl(parsedUrl, shortUrl, expirationDate)
             .then(() => {
                 res.status(200).send({ shortUrl: shortUrl });
             })

@@ -16,7 +16,7 @@ async function saveUrl(longUrl, shortUrl, expirationDate) {
         const newUrl = new Url({
             sourceUrl: longUrl,
             shortUrl: shortUrl,
-            expirationDate: expirationDate
+            expirationDate: Date.now() + (1000* 60 * expirationDate) 
         });
         await newUrl.save();
         console.log('URL saved successfully!');
@@ -39,9 +39,20 @@ async function getLongUrl(shortUrl) {
     return urlEntry.sourceUrl;
 }
 
+async function deleteExpiredUrls() {
+    try {
+        const now = new Date();
+        const result = await Url.deleteMany({ expirationDate: { $lt: now } });
+        console.log(`Deleted ${result.deletedCount} expired URLs.`);
+    } catch (error) {
+        console.error('Error deleting expired URLs:', error);
+    }
+}
+
 module.exports = {
     parseUrl,
     saveUrl,
     generateUniqueId,
-    getLongUrl
+    getLongUrl,
+    deleteExpiredUrls
 };

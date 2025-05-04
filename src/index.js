@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const dotenv = require('dotenv').config();
+const { deleteExpiredUrls } = require('./utils/UrlUtils');
 const app = express();
 app.use(express.json());
 
@@ -23,5 +24,9 @@ const startServer = async () => {
         process.exit(1);
     }
 };
+// Job that erases all expired urls every minute.
+setInterval(() => {
+    deleteExpiredUrls();
+}, 1000 * 60 * 1);
 
 startServer();
