@@ -1,26 +1,32 @@
 version: '3.8'
 
 services:
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "8080:8080"
-  #   depends_on:
-  #     - mongodb
-
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - Shorten
   mongodb:
     image: mongo:6.0
     container_name: mongodb
     ports:
       - "27017:27017"
     environment:
-    # Lembre-se de trocar as variáveis de ambiente com os valores corretos no .env
+      # Lembre-se de trocar as variáveis de ambiente com os valores corretos no .env
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongodb_data:/data/db
-
+    networks:
+      - Shorten
+  
 volumes:
   mongodb_data:
+
+networks:
+  Shorten:

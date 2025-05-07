@@ -10,10 +10,11 @@ app.use('/', urlRoutes);
 
 const startServer = async () => {
     try {
+        const host = process.env.MONGO_HOST;
         const username = process.env.MONGO_INITDB_ROOT_USERNAME;
         const password = process.env.MONGO_INITDB_ROOT_PASSWORD;
 
-        await mongoose.connect(`mongodb://${username}:${password}@127.0.0.1:27017`);
+        await mongoose.connect(`mongodb://${username}:${password}@${host}:27017`);
         console.log('Connected to MongoDB with success');
 
         app.listen(8080, () => {
