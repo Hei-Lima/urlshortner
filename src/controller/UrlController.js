@@ -26,7 +26,7 @@ module.exports = {
 
     get: async (req, res) => {
         try {
-            const shortUrl = req.body.shortUrl;
+            const shortUrl = req.query.shortUrl;
     
             const info = await getUrlInfo(shortUrl);
     
