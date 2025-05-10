@@ -31,6 +31,14 @@ function generateUniqueId() {
     return nanoid()
 }
 
+async function getUrlInfo(shortUrl) {
+    const urlEntry = await Url.findOne({ shortUrl }).exec();
+    if (!urlEntry) {
+        return null;
+    }
+
+    return urlEntry;
+}
 async function getLongUrl(shortUrl) {
     const urlEntry = await Url.findOne({ shortUrl }).exec();
     if (!urlEntry) {
@@ -54,5 +62,6 @@ module.exports = {
     saveUrl,
     generateUniqueId,
     getLongUrl,
+    getUrlInfo,
     deleteExpiredUrls
 };

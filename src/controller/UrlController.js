@@ -1,4 +1,4 @@
-const { parseUrl, generateUniqueId, saveUrl, getLongUrl } = require('../utils/UrlUtils');
+const { parseUrl, generateUniqueId, saveUrl, getLongUrl, getUrlInfo } = require('../utils/UrlUtils');
 
 module.exports = {
     create: (req, res) => {
@@ -22,6 +22,30 @@ module.exports = {
                 console.error('Error saving URL:', error);
                 res.status(500).send({ error: 'Internal Server Error' });
             });
+    },
+
+    get: async (req, res) => {
+        try {
+            const shortUrl = req.body.shortUrl;
+    
+            const info = await getUrlInfo(shortUrl);
+    
+            if (!info) {
+                return res.status(404).send({ error: 'URL not found' });
+            }
+    
+            const responseObject = {
+                shortUrl: info.shortUrl,
+                longUrl: info.sourceUrl,
+                expirationDate: info.expirationDate,
+                createdAt: info.createdAt
+            } 
+
+            res.status(200).send(responseObject);
+        } catch (error) {
+            console.error('Error during search:', error);
+            res.status(500).send({ error: 'Internal Server Error' });
+        }
     },
 
     redirect: async (req, res) => {

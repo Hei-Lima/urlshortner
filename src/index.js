@@ -4,9 +4,11 @@ const dotenv = require('dotenv').config();
 const { deleteExpiredUrls } = require('./utils/UrlUtils');
 const app = express();
 app.use(express.json());
+const cors = require('cors');
 
 const urlRoutes = require('./routes/UrlRoutes');
 app.use('/', urlRoutes);
+app.use(cors());
 
 const startServer = async () => {
     try {
